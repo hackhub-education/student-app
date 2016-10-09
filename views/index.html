@@ -26,7 +26,7 @@
             <p>{{ clickedStudent.email }}</p>
         </div>
 
-        <div class="student-detail">
+        <div ng-hide="clickedStudent" class="student-detail">
             <span>First Name</span>
             <div>
                 <input type="text" name="firstName" ng-model="newStudent.firstName">

@@ -19,7 +19,8 @@ myapp.controller('studentController', function($http, $scope) {
 
     $scope.createNewStudent = function() {
         $http.post(host + 'student/new', $scope.newStudent).success(function(response) {
-            console.log(response);
+            $scope.students.push(response);
+            $scope.newStudent = {};
         });
     };
 });
