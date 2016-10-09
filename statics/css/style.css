@@ -30,6 +30,18 @@ html, body {
     margin: 0;
 }
 
+.student-list .add-new {
+    background-color: darkturquoise;
+}
+
+.student-list .add-new h1 {
+    color: white;
+}
+
+.student-list .add-new h1:hover {
+    color: darkturquoise;
+}
+
 .student-detail {
     display: inline-block;
     background-color: #e0e0e0;
@@ -53,4 +65,9 @@ html, body {
     color: white;
     border: 1px solid darkturquoise;
     padding: 10px;
+}
+
+.student-detail button.delete-btn {
+    background-color: red;
+    border: 1px solid red;
 }

@@ -20,7 +20,23 @@ myapp.controller('studentController', function($http, $scope) {
     $scope.createNewStudent = function() {
         $http.post(host + 'student/new', $scope.newStudent).success(function(response) {
             $scope.students.push(response);
-            $scope.newStudent = {};
+            $scope.newStudent = undefined;
         });
+    };
+
+    $scope.clearClickedStudent = function() {
+        $scope.clickedStudent = undefined;
+    };
+
+    $scope.deleteStudent = function(sid) {
+        $http.delete(host + 'student/' + sid).success(function(response) {
+            for (var i = 0; i < $scope.students.length; i++) {
+                if ($scope.students[i]._id === response._id) {
+                    $scope.students.splice(i, 1);
+                    $scope.clickedStudent = undefined;
+                }
+            }
+
+        })
     };
 });

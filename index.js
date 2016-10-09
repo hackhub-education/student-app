@@ -39,6 +39,17 @@ app.get('/api/students', function (req, res) {
     });
 });
 
+app.delete('/api/student/:id', function(req, res) {
+    var studentId = req.params.id;
+    Student.findOneAndRemove({_id: studentId}, function(err, doc) {
+        if (err) {
+            console.log(err);
+        } else {
+            res.send(doc);
+        }
+    });
+});
+
 app.get('/api/student/:id', function(req, res) {
     var studentId = req.params.id;
     Student.findById(studentId, function (err, doc) {

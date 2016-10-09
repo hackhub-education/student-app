@@ -13,6 +13,10 @@
                 <h1 ng-click="getStudentDetail(student._id)">{{ student.firstName }}</h1>
             </div>
 
+            <div class="add-new" ng-click="clearClickedStudent()">
+                <h1>Add New</h1>
+            </div>
+
         </div>
 
         <div ng-show="clickedStudent" class="student-detail">
@@ -24,6 +28,7 @@
             <p>{{ clickedStudent.age }}</p>
             <span>Email</span>
             <p>{{ clickedStudent.email }}</p>
+            <button class="delete-btn" ng-click="deleteStudent(clickedStudent._id)">Delete</button>
         </div>
 
         <div ng-hide="clickedStudent" class="student-detail">
