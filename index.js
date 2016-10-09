@@ -3,8 +3,9 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var app = express();
 
-app.set('views', './views');
-app.set('view engine', 'pug');
+// app.set('views', './views');
+// app.set('view engine', 'html');
+app.use(express.static('statics'));
 
 mongoose.connect('mongodb://localhost/webdxd');
 
@@ -24,12 +25,16 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.get('/', function (req, res) {
+    res.sendfile('./views/index.html');
+});
+
+app.get('/api/students', function (req, res) {
     Student.find().exec(function(err, doc) {
         if (err) {
             console.log(err);
         } else {
-            // res.send(doc);
-            res.render('index', { title: 'WebDxD Students', students: doc});
+            res.send(doc);
+            // res.render('index', { title: 'WebDxD Students', students: doc});
         }
     });
 });
