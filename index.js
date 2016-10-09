@@ -77,7 +77,7 @@ app.post('/student', function(req, res) {
     });
 });
 
-app.post('/student/new', function(req, res) {
+app.post('/api/student/new', function(req, res) {
     var newStudent = new Student(req.body);
     newStudent.save(function(err, doc) {
         if (err) {

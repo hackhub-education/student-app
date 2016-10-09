@@ -25,6 +25,27 @@
             <span>Email</span>
             <p>{{ clickedStudent.email }}</p>
         </div>
+
+        <div class="student-detail">
+            <span>First Name</span>
+            <div>
+                <input type="text" name="firstName" ng-model="newStudent.firstName">
+            </div>
+            <span>Last Name</span>
+            <div>
+                <input type="text" name="lastName" ng-model="newStudent.lastName">
+            </div>
+            <span>Age</span>
+            <div>
+                <input type="text" name="age" ng-model="newStudent.age">
+            </div>
+            <span>Email</span>
+            <div>
+                <input type="email" name="email" ng-model="newStudent.email">
+            </div>
+            <button ng-click="createNewStudent()">Submit</button>
+        </div>
+
     </div>
 </body>
 </html>

@@ -15,5 +15,11 @@ myapp.controller('studentController', function($http, $scope) {
         $http.get(host + 'student/' + sid).success(function(response){
            $scope.clickedStudent = response;
         });
-    }
+    };
+
+    $scope.createNewStudent = function() {
+        $http.post(host + 'student/new', $scope.newStudent).success(function(response) {
+            console.log(response);
+        });
+    };
 });
