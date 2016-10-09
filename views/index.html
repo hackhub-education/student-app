@@ -7,14 +7,23 @@
 </head>
 <body ng-app="student">
     <div ng-controller="studentController">
-        <div ng-repeat="student in students">
-            <h1 ng-click="getStudentDetail(student._id)">{{ student.firstName }}</h1>
+        <div class="student-list">
+
+            <div ng-repeat="student in students">
+                <h1 ng-click="getStudentDetail(student._id)">{{ student.firstName }}</h1>
+            </div>
+
         </div>
-        <div ng-show="clickedStudent">
-            <p>First Name: {{ clickedStudent.firstName }}</p>
-            <p>Last Name: {{ clickedStudent.lastName }}</p>
-            <p>Age: {{ clickedStudent.age }}</p>
-            <p>Email: {{ clickedStudent.email }}</p>
+
+        <div ng-show="clickedStudent" class="student-detail">
+            <span>First Name</span>
+            <p>{{ clickedStudent.firstName }}</p>
+            <span>Last Name</span>
+            <p>{{ clickedStudent.lastName }}</p>
+            <span>Age</span>
+            <p>{{ clickedStudent.age }}</p>
+            <span>Email</span>
+            <p>{{ clickedStudent.email }}</p>
         </div>
     </div>
 </body>
