@@ -2,10 +2,18 @@
  * Created by yanhong on 2016-10-09.
  */
 var myapp = angular.module('student', []);
+var host = 'http://localhost:3000/api/';
 
 myapp.controller('studentController', function($http, $scope) {
     $scope.students = [];
-    $http.get('http://localhost:3000/api/students').success(function(response) {
+
+    $http.get(host + 'students').success(function(response) {
         $scope.students = response;
-    })
+    });
+
+    $scope.getStudentDetail = function(sid) {
+        $http.get(host + 'student/' + sid).success(function(response){
+           $scope.clickedStudent = response;
+        });
+    }
 });

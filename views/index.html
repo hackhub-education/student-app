@@ -1,13 +1,20 @@
 <html>
 <head>
-    <title></title>
+    <title>Student List</title>
+    <link rel="stylesheet" href="/css/style.css">
     <script src="/js/angular.min.js"></script>
     <script src="/js/app.js"></script>
 </head>
 <body ng-app="student">
     <div ng-controller="studentController">
         <div ng-repeat="student in students">
-            <h1>{{ student.firstName }}</h1>
+            <h1 ng-click="getStudentDetail(student._id)">{{ student.firstName }}</h1>
+        </div>
+        <div ng-show="clickedStudent">
+            <p>First Name: {{ clickedStudent.firstName }}</p>
+            <p>Last Name: {{ clickedStudent.lastName }}</p>
+            <p>Age: {{ clickedStudent.age }}</p>
+            <p>Email: {{ clickedStudent.email }}</p>
         </div>
     </div>
 </body>
