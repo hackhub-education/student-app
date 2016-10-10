@@ -25,7 +25,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.get('/', function (req, res) {
-    res.sendfile('./views/index.html');
+    res.sendFile(__dirname + '/views/index.html');
 });
 
 app.get('/api/students', function (req, res) {
@@ -89,14 +89,23 @@ app.post('/student', function(req, res) {
 });
 
 app.post('/api/student/new', function(req, res) {
-    var newStudent = new Student(req.body);
-    newStudent.save(function(err, doc) {
-        if (err) {
-            console.log(err);
-        } else {
-            res.send(doc);
-        }
-    });
+    if (req.body._id) {
+        // Update student
+        Student.findOneAndUpdate({_id: req.body._id}, req.body, {new: true}, function (err, doc) {
+           res.send(doc);
+        });
+
+    } else {
+        // Create new student
+        var newStudent = new Student(req.body);
+        newStudent.save(function(err, doc) {
+            if (err) {
+                console.log(err);
+            } else {
+                res.send(doc);
+            }
+        });
+    }
 });
 
 app.listen(3000, function () {

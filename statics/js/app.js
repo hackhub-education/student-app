@@ -19,7 +19,19 @@ myapp.controller('studentController', function($http, $scope) {
 
     $scope.createNewStudent = function() {
         $http.post(host + 'student/new', $scope.newStudent).success(function(response) {
-            $scope.students.push(response);
+            var isNew = true;
+            for (var i = 0; i < $scope.students.length; i++) {
+                if ($scope.students[i]._id === response._id) {
+                    $scope.students[i] = response;
+                    isNew = false;
+                }
+            }
+            if (isNew) {
+                $scope.students.push(response);
+
+            } else {
+                $scope.clickedStudent = response;
+            }
             $scope.newStudent = undefined;
         });
     };
@@ -38,5 +50,10 @@ myapp.controller('studentController', function($http, $scope) {
             }
 
         })
+    };
+
+    $scope.showEditForm = function() {
+        $scope.newStudent = $scope.clickedStudent;
+        $scope.clickedStudent = undefined;
     };
 });

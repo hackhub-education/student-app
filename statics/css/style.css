@@ -65,6 +65,7 @@ html, body {
     color: white;
     border: 1px solid darkturquoise;
     padding: 10px;
+    cursor: pointer;
 }
 
 .student-detail button.delete-btn {
