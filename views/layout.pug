@@ -6,7 +6,7 @@ html
         link(href='//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css', rel='stylesheet', media='screen')
     body
         if (message)
-            h4.error-msg=message
+            h4.alert.alert-danger=message
         block content
         script(src='//code.jquery.com/jquery.js')
         script(src='//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js')
