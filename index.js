@@ -3,8 +3,11 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var app = express();
 
-// app.set('views', './views');
-// app.set('view engine', 'html');
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
+
+app.set('views', './views');
+app.set('view engine', 'pug');
 app.use(express.static('statics'));
 
 mongoose.connect('mongodb://localhost/webdxd');
@@ -106,6 +109,14 @@ app.post('/api/student/new', function(req, res) {
             }
         });
     }
+});
+
+app.get('/chat', function(req, res) {
+    res.render('chat', {});
+});
+
+io.on('connection', function(socket){
+    console.log('a user connected');
 });
 
 app.listen(3000, function () {
