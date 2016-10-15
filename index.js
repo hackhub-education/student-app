@@ -2,13 +2,23 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var app = express();
-
+var passport = require('passport');
+var Account = require('./models/account');
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
 app.set('views', './views');
 app.set('view engine', 'pug');
 app.use(express.static('statics'));
+
+app.use(require('express-session')({
+    secret: 'abc123',
+    resave: false,
+    saveUninitialized: false
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 mongoose.connect('mongodb://localhost/webdxd');
 
@@ -125,16 +135,26 @@ io.on('connection', function(socket){
     });
 });
 
-// app.listen(3000, function () {
-//     console.log('Example app listening on port 3000!');
-// });
-
 app.get('/login', function(req, res) {
    res.render('login', {});
 });
 
 app.get('/signup', function(req, res) {
    res.render('signup', {});
+});
+
+
+app.post('/signup', function(req, res) {
+
+});
+
+app.post('/login', function(req, res) {
+
+});
+
+app.get('/logout', function(req, res) {
+    req.logout();
+    res.redirect('/login');
 });
 
 http.listen(3000, function(){
