@@ -146,6 +146,17 @@ app.get('/signup', function(req, res) {
 
 app.post('/signup', function(req, res) {
 
+    Account.register(new Account({username: req.body.username}), req.body.password, function(err, account) {
+
+        if (err) {
+            res.render('signup', {message: err});
+        } else {
+            console.log(account);
+            res.redirect('/');
+        }
+
+    });
+
 });
 
 app.post('/login', function(req, res) {
