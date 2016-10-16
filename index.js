@@ -155,9 +155,10 @@ app.post('/signup', function(req, res) {
             passport.authenticate('local')(req, res, function () {
                 req.session.save(function (err) {
                     if (err) {
-                        return next(err);
+                        res.render('signup', {message: err})
+                    } else {
+                        res.redirect('/chat');
                     }
-                    res.redirect('/chat');
                 });
             });
         }
