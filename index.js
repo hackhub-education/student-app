@@ -11,14 +11,13 @@ app.set('views', './views');
 app.set('view engine', 'pug');
 app.use(express.static('statics'));
 
-app.use(require('express-session')({
-    secret: 'abc123',
-    resave: false,
-    saveUninitialized: false
-}));
-
-app.use(passport.initialize());
-app.use(passport.session());
+// var LocalStrategy = require('passport-local').Strategy;
+// app.use(require('express-session')({ secret: 'abc123' }));
+// app.use(passport.initialize());
+// app.use(passport.session());
+// passport.use(new LocalStrategy(Account.authenticate()));
+// passport.serializeUser(Account.serializeUser());
+// passport.deserializeUser(Account.deserializeUser());
 
 mongoose.connect('mongodb://localhost/webdxd');
 
@@ -47,7 +46,6 @@ app.get('/api/students', function (req, res) {
             console.log(err);
         } else {
             res.send(doc);
-            // res.render('index', { title: 'WebDxD Students', students: doc});
         }
     });
 });
@@ -122,7 +120,11 @@ app.post('/api/student/new', function(req, res) {
 });
 
 app.get('/chat', function(req, res) {
-    res.render('chat', {});
+    if (req.user) {
+        res.render('chat', {user: req.user.username});
+    } else {
+        res.render('chat');
+    }
 });
 
 io.on('connection', function(socket){
@@ -136,32 +138,27 @@ io.on('connection', function(socket){
 });
 
 app.get('/login', function(req, res) {
-   res.render('login', {});
+   res.render('login');
 });
 
 app.get('/signup', function(req, res) {
-   res.render('signup', {});
+   res.render('signup');
 });
 
 
 app.post('/signup', function(req, res) {
-
     Account.register(new Account({username: req.body.username}), req.body.password, function(err, account) {
-
         if (err) {
             res.render('signup', {message: err});
         } else {
-            console.log(account);
-            res.redirect('/');
+            res.redirect('/chat');
         }
-
     });
-
 });
 
-app.post('/login', function(req, res) {
-
-});
+app.post('/login', passport.authenticate('local'), function(req, res) {
+        res.redirect('/chat');
+    });
 
 app.get('/logout', function(req, res) {
     req.logout();
