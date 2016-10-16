@@ -124,7 +124,7 @@ app.get('/chat', function(req, res) {
     if (req.user) {
         res.render('chat', {user: req.user.username});
     } else {
-        res.render('chat');
+        res.redirect('/login');
     }
 });
 
@@ -148,7 +148,7 @@ app.get('/signup', function(req, res) {
 
 
 app.post('/signup', function(req, res) {
-    Account.register(new Account({username: req.body.username}), req.body.password, function(err, account) {
+    Account.register(new Account({username: req.body.username}), req.body.password, function(err) {
         if (err) {
             res.render('signup', {message: err});
         } else {
