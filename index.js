@@ -11,13 +11,14 @@ app.set('views', './views');
 app.set('view engine', 'pug');
 app.use(express.static('statics'));
 
-// var LocalStrategy = require('passport-local').Strategy;
-// app.use(require('express-session')({ secret: 'abc123' }));
-// app.use(passport.initialize());
-// app.use(passport.session());
-// passport.use(new LocalStrategy(Account.authenticate()));
-// passport.serializeUser(Account.serializeUser());
-// passport.deserializeUser(Account.deserializeUser());
+var LocalStrategy = require('passport-local').Strategy;
+passport.use(new LocalStrategy(Account.authenticate()));
+passport.serializeUser(Account.serializeUser());
+passport.deserializeUser(Account.deserializeUser());
+
+app.use(require('express-session')({ secret: 'abc123' }));
+app.use(passport.initialize());
+app.use(passport.session());
 
 mongoose.connect('mongodb://localhost/webdxd');
 
@@ -151,14 +152,21 @@ app.post('/signup', function(req, res) {
         if (err) {
             res.render('signup', {message: err});
         } else {
-            res.redirect('/chat');
+            passport.authenticate('local')(req, res, function () {
+                req.session.save(function (err) {
+                    if (err) {
+                        return next(err);
+                    }
+                    res.redirect('/chat');
+                });
+            });
         }
     });
 });
 
-app.post('/login', passport.authenticate('local'), function(req, res) {
+app.post('/login', passport.authenticate('local'),function(req, res) {
         res.redirect('/chat');
-    });
+});
 
 app.get('/logout', function(req, res) {
     req.logout();
